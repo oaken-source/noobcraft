@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>noobcraft</title>
+        <script type="text/javascript"
+            src="https://cdn.rawgit.com/brython-dev/brython/3.2.2/www/src/brython.js">
+        </script>
+    </head>
+
+    <body onload="brython()">
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" style="background:green;border-style:solid;border-width:1;border-color:#000;">
+          <g id="panel">
+          </g>
+        </svg>
+
+        <script type="text/python">
+            from browser import document, svg
+
+            def renderBlob(x, y, color):
+                ellipse = svg.ellipse(cx=x,cy=y, rx="30", ry="30", stroke="black",stroke_width="1",fill=color)
+                panel = document['panel']
+                panel <= ellipse
+
+            renderBlob(200, 100, "blue")
+            renderBlob(600, 400, "red")
+        </script>
+    </body>
+</html>
