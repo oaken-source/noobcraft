@@ -1,6 +1,7 @@
 
 import math
 
+
 class Game(object):
 
     def __init__(self):
@@ -11,12 +12,13 @@ class Game(object):
 
     def run(self):
         starters = [ Unit(player) for player in self.players ]
-        world = World(starters=starters)
+        self.world = World(starters=starters)
 
-        while world.age < 1000:
+        while self.world.age < 1000:
             for player in self.players:
-                player.act(world)
-            world.tick()
+                player.act(self.world)
+            self.world.tick()
+
 
 class World(object):
 
@@ -37,6 +39,7 @@ class World(object):
     def tick(self):
         self.age += 1
 
+
 class Unit(object):
 
     def __repr__(self):
@@ -46,6 +49,7 @@ class Unit(object):
         self.player = player
         self.x = 0.0
         self.y = 0.0
+
 
 class Player(object):
 
@@ -59,10 +63,12 @@ class Player(object):
     def act(self, world):
         raise NotImplementedError()
 
+
 class InactivePlayer(Player):
 
     def act(self, world):
         pass
+
 
 if __name__ == '__main__':
     game = Game()
@@ -70,4 +76,4 @@ if __name__ == '__main__':
     game.addPlayer(InactivePlayer('Player2', 'blue'))
     game.addPlayer(InactivePlayer('Player3', 'green'))
 
-    result = game.run()
+    game.run()
