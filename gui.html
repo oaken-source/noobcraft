@@ -15,14 +15,12 @@
 
         <script type="text/python">
             from browser import document, svg
-            print('hello')
             from noobcraft import Game, InactivePlayer
-            print('world')
 
             game = Game()
             game.addPlayer(InactivePlayer('Player1', 'red'))
             game.addPlayer(InactivePlayer('Player2', 'blue'))
-	    game.addPlayer(InactivePlayer('Player3', 'yellow'))
+            game.addPlayer(InactivePlayer('Player3', 'yellow'))
             game.addPlayer(InactivePlayer('Player4', 'orange'))
             game.addPlayer(InactivePlayer('Player5', 'cyan'))
 
@@ -34,7 +32,7 @@
                 panel <= ellipse
 
             for unit in game.world.units:
-		renderBlob(400 + 200 * unit.x, 300 + 200 * unit.y, unit.player.color)
+                renderBlob(400 + 200 * unit.x, 300 + 200 * unit.y, unit.player.color)
         </script>
     </body>
 </html>

@@ -11,13 +11,18 @@ class Game(object):
         self.players.append(player)
 
     def run(self):
-        starters = [ Unit(player) for player in self.players ]
-        self.world = World(starters=starters)
+        self.world = World(
+            starters = [ Unit(player) for player in self.players ]
+        )
 
-        while self.world.age < 1000:
+        while not self.over:
             for player in self.players:
                 player.act(self.world)
             self.world.tick()
+
+    @property
+    def over(self):
+        return self.world.age >= 1000
 
 
 class World(object):
@@ -34,8 +39,6 @@ class World(object):
             self.units[i].x = l * math.cos(i * a)
             self.units[i].y = l * math.sin(i * a)
 
-        print(self.units)
-
     def tick(self):
         self.age += 1
 
@@ -47,8 +50,16 @@ class Unit(object):
 
     def __init__(self, player):
         self.player = player
-        self.x = 0.0
-        self.y = 0.0
+        self.position = (0.0, 0.0)
+        self.speed = 1
+
+    @property
+    def x(self):
+        return self.position[0]
+
+    @property
+    def y(self):
+        return self.position[1]
 
 
 class Player(object):
@@ -57,17 +68,8 @@ class Player(object):
         self.name = name
         self.color = color
 
-    def deploy(self, world):
-        pass
-
     def act(self, world):
         raise NotImplementedError()
-
-
-class InactivePlayer(Player):
-
-    def act(self, world):
-        pass
 
 
 if __name__ == '__main__':
