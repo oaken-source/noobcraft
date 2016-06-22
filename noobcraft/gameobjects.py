@@ -1,11 +1,15 @@
 
-import math
+'''
+This module defines the game objects present in noobcraft.
+'''
 
-from demo_players import InactivePlayer
+import math
 
 
 class Game(object):
-
+    '''
+    This class represents a noobcraft game.
+    '''
     def __init__(self):
         self.players = []
 
@@ -28,27 +32,31 @@ class Game(object):
 
 
 class World(object):
-
+    '''
+    This class represents a world in noobcraft.
+    '''
     def __init__(self, starters):
         self.age = 0
-        self.units = starters
 
         n = len(starters)
         a = 2 * math.pi / n
         l = 1 / (2 * math.sin(a / 2))
 
-        for i in range(len(self.units)):
-            self.units[i].position = (l * math.cos(i * a), l * math.sin(i * a))
+        for i in range(n):
+            starters[i].position = (l * math.cos(i * a), l * math.sin(i * a))
+
+        self.units = starters
 
     def tick(self):
+        for unit in self.units:
+            unit.tick()
         self.age += 1
 
 
 class Unit(object):
-
-    def __repr__(self):
-        return '<(%f, %f) - %s>' % (self.x, self.y, self.player.name)
-
+    '''
+    This class represents a unit of control for the players.
+    '''
     def __init__(self, player):
         self.player = player
         self.position = (0.0, 0.0)
@@ -62,11 +70,7 @@ class Unit(object):
     def y(self):
         return self.position[1]
 
+    def tick(self):
+        pass
 
-if __name__ == '__main__':
-    game = Game()
-    game.addPlayer(InactivePlayer('Player1', 'red'))
-    game.addPlayer(InactivePlayer('Player2', 'blue'))
-    game.addPlayer(InactivePlayer('Player3', 'green'))
 
-    game.run()

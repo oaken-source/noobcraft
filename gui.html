@@ -15,7 +15,8 @@
 
         <script type="text/python">
             from browser import document, svg
-            from noobcraft import Game, InactivePlayer
+            from noobcraft.gameobjects import Game
+            from noobcraft.players import InactivePlayer
 
             game = Game()
             game.addPlayer(InactivePlayer('Player1', 'red'))

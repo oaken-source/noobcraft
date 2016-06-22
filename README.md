@@ -1,6 +1,6 @@
 # noobcraft
 
-## Rules of the game - Proposals / Ideas 
+## Rules of the game - Proposals / Ideas
 
 * Size (both visual, as well as 'physical' (collision)) depends on the amount of resources an entity currently possesses
 * Movement costs are a percentage of the resources possessed (moving is more expensive for bigger entities)
