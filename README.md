@@ -24,6 +24,8 @@ anything probably: move faster, do more dmg, produce more resources, allow divid
 tba
 
 ## Crazy future ideas
+* Upgrades as equipment that can be traded and has a weight (additional movement costs)
+  * Buildings could be realized similarly (super heavy, more powerful, can be used if entity resides there)
 * Model after Nature/Humans
 * Multiple resources and trading
 * Aging? Injuries? -> reduction in efficiency
