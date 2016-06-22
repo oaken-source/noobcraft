@@ -1,6 +1,8 @@
 
 import math
 
+from demo_players import InactivePlayer
+
 
 class Game(object):
 
@@ -36,8 +38,7 @@ class World(object):
         l = 1 / (2 * math.sin(a / 2))
 
         for i in range(len(self.units)):
-            self.units[i].x = l * math.cos(i * a)
-            self.units[i].y = l * math.sin(i * a)
+            self.units[i].position = (l * math.cos(i * a), l * math.sin(i * a))
 
     def tick(self):
         self.age += 1
@@ -60,16 +61,6 @@ class Unit(object):
     @property
     def y(self):
         return self.position[1]
-
-
-class Player(object):
-
-    def __init__(self, name, color):
-        self.name = name
-        self.color = color
-
-    def act(self, world):
-        raise NotImplementedError()
 
 
 if __name__ == '__main__':
