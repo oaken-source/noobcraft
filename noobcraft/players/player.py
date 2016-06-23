@@ -14,12 +14,3 @@ class Player(object):
     def act(self, world):
         raise NotImplementedError('override this method in your player.')
 
-
-class InactivePlayer(Player):
-    '''
-    This demo player just does nothing.
-    '''
-    def act(self, world):
-        pass
-
-

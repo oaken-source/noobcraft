@@ -6,34 +6,46 @@
         </script>
     </head>
 
-    <body onload="brython()">
+    <body onload="brython(1)">
 
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="600" style="background:green;border-style:solid;border-width:1;border-color:#000;">
-          <g id="panel">
-          </g>
-        </svg>
+        <canvas id="mycanvas" />
 
         <script type="text/python">
-            from browser import document, svg
-            from noobcraft.gameobjects import Game
-            from noobcraft.players import InactivePlayer
+            from browser import document, timer, alert
+
+            from noobcraft.game import Game
+            from noobcraft.rendering.renderer import Renderer
+            from noobcraft.players.inactiveplayer import InactivePlayer
+            
 
             game = Game()
-            game.addPlayer(InactivePlayer('Player1', 'red'))
-            game.addPlayer(InactivePlayer('Player2', 'blue'))
-            game.addPlayer(InactivePlayer('Player3', 'yellow'))
-            game.addPlayer(InactivePlayer('Player4', 'orange'))
-            game.addPlayer(InactivePlayer('Player5', 'cyan'))
+            renderer = Renderer()
 
-            game.run()
+            def drawGame():
+                canvas = document.getElementById('mycanvas')
 
-            def renderBlob(x, y, color):
-                ellipse = svg.ellipse(cx=x,cy=y, rx="30", ry="30", stroke="black",stroke_width="1",fill=color)
-                panel = document['panel']
-                panel <= ellipse
+                if canvas.getContext is None:
+                    alert('You need Safari or Firefox 1.5+ to see this demo.')
+                else:
+                    ctx = canvas.getContext('2d')
+                    ctx.canvas.width  = 800
+                    ctx.canvas.height = 600
+                    renderer.draw(game, ctx)
 
-            for unit in game.world.units:
-                renderBlob(400 + 200 * unit.x, 300 + 200 * unit.y, unit.player.color)
+            def gameloop():
+                timer.set_timeout(gameloop, 20)
+
+                game.update()
+                drawGame()
+            
+            game.addPlayer(InactivePlayer('Player1', [1, 0, 0]))
+            game.addPlayer(InactivePlayer('Player2', [0, 1, 0]))
+            game.addPlayer(InactivePlayer('Player3', [0, 0, 1]))
+            game.addPlayer(InactivePlayer('Player4', [1, 1, 0]))
+            game.addPlayer(InactivePlayer('Player5', [1, 0, 1]))
+            
+            game.start()            
+            gameloop();
         </script>
     </body>
 </html>
