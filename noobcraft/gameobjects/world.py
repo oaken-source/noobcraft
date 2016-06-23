@@ -21,14 +21,27 @@ class World(object):
 
         self.units = starters
 
-    def tick(self):
+    def update(self):
         for unit in self.units:
-            unit.tick()
+            unit.update()
         self.age += 1
 
+    # TODO use a filter instead!!
     def unitsOf(self, player):
         result = []
         for unit in self.units:
             if unit.player == player:
                 result.append(unit)
+        return result
+
+    # TODO use a filter instead!!
+    def closestEnemyTo(self, unit):
+        minDistance = 10 # the field is only 1x1
+        result = None
+        for candidate in self.units:
+            if candidate.player != unit.player:
+                distance = candidate.distanceTo(unit)
+                if distance < minDistance:
+                    minDistance = distance
+                    result = candidate
         return result

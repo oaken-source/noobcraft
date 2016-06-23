@@ -23,8 +23,8 @@ class Game(object):
         if not self.over:
             for player in self.players:
                 player.act(self.world)
-            self.world.tick()
-
+            self.world.update()
+            
     @property
     def over(self):
         return self.world.age >= 1000
