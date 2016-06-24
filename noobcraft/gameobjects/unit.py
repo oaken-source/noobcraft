@@ -34,7 +34,7 @@ class Unit(object):
         speedFactor = max(0, min(1, speedFactor)) # should be 0..1
 
         # movement vector, not normalized
-        v = (targetPosition[0] - self.x, targetPosition[1] - self.y)               
+        v = (targetPosition[0] - self.x, targetPosition[1] - self.y)
         dv = math.sqrt(v[0] * v[0] + v[1] * v[1])  # length of the vector
 
         if dv < speedFactor:    # target is super close

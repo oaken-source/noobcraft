@@ -18,6 +18,6 @@ if __name__ == '__main__':
     game.addPlayer(InactivePlayer('Player4', [1, 1, 0]))
     game.addPlayer(InactivePlayer('Player5', [1, 0, 1]))
 
-    game.start()            
+    game.start()
     while True:
         game.update()
