@@ -20,10 +20,14 @@ class Game(object):
         self.world = World([ Unit(player) for player in self.players ])
 
     def update(self):
-        if not self.over:
-            for player in self.players:
-                player.act(self.world)
-            self.world.update()
+        for player in self.players:
+            player.act(self.world)
+        self.world.update()
+
+    def run(self):
+        self.start()
+        while not self.over:
+            self.update()
 
     @property
     def over(self):
