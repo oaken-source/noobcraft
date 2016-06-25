@@ -26,13 +26,8 @@ class World(object):
             unit.update()
         self.age += 1
 
-    # TODO use a filter instead!!
     def unitsOf(self, player):
-        result = []
-        for unit in self.units:
-            if unit.player == player:
-                result.append(unit)
-        return result
+        return [ unit for unit in self.units if unit.player == player ]
 
     # TODO use a filter instead!!
     def closestEnemyTo(self, unit):
