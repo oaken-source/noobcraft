@@ -63,11 +63,13 @@ class Unit(object):
         v = (targetPosition[0] - self.x, targetPosition[1] - self.y)
         dv = math.sqrt(v[0] * v[0] + v[1] * v[1])  # length of the vector
 
-        if dv < speedFactor:    # target is super close
+        if dv < speedFactor * self.speed:    # target is super close
             speedFactor = dv    # so we wont need to make the full move, just dv
+            self.x = targetPosition[0]
+            self.y = targetPosition[1]
+        else:
+            # offset position by normalized movement vector * speedFactor
+            self.x = self.x + v[0] / dv * speedFactor * self.speed
+            self.y = self.y + v[1] / dv * speedFactor * self.speed
 
-        # offset position by normalized movement vector * speedFactor
-        self.x = self.x + v[0] / dv * speedFactor * self.speed
-        self.y = self.y + v[1] / dv * speedFactor * self.speed
-
-        self.size = self.size - speedFactor * math.pow(self.size, 0.19)
+        self.size = self.size - speedFactor * math.pow(self.size, 0.1)
