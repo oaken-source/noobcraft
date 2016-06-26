@@ -20,4 +20,7 @@ class AggressivePlayer(Player):
             if closestEnemy is None:
                 unit.moveTowards(self.randomDirection(), 1)
             else:
-                unit.moveTowards([closestEnemy.x, closestEnemy.y], 1)
+                if unit.inRange(closestEnemy):
+                    unit.attack(closestEnemy)
+                else:
+                    unit.moveTowards([closestEnemy.x, closestEnemy.y], 1)

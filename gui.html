@@ -45,14 +45,16 @@
                 game.update()
                 drawGame()
 
-            game.addPlayer(InactivePlayer('Player1', [0, 0, 0]))
+            game.addPlayer(  InactivePlayer('Player1', [0, 0, 0]))
             game.addPlayer(AggressivePlayer('Player2', [1, 0, 0]))
             game.addPlayer(AggressivePlayer('Player3', [0, 1, 0]))
             game.addPlayer(AggressivePlayer('Player4', [0, 0, 1]))
-            game.addPlayer(InactivePlayer('Player5', [1, 1, 0]))
-            game.addPlayer(InactivePlayer('Player6', [1, 0, 1]))
+            game.addPlayer(  InactivePlayer('Player5', [1, 1, 0]))
+            game.addPlayer(  InactivePlayer('Player6', [1, 0, 1]))
             game.addPlayer(AggressivePlayer('Player7', [0, 1, 1]))
-            game.addPlayer(InactivePlayer('Player8', [1, 1, 1]))
+            game.addPlayer(  InactivePlayer('Player8', [1, 1, 1]))
+            game.addPlayer(AggressivePlayer('Player9', [.5,0, 0]))
+            game.addPlayer(  InactivePlayer('PlayerX', [0, 0,.5]))
 
             game.start()
             gameloop();

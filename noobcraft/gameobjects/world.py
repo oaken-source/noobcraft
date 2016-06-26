@@ -34,3 +34,7 @@ class World(object):
 
     def unitsOf(self, player):
         return [ unit for unit in self.units if unit.player == player ]
+
+    def removeUnit(self, unit):
+        if unit.size <= 0:
+            self.units.remove(unit)
