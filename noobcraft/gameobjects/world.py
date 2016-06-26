@@ -21,11 +21,10 @@ class World(object):
     def placeStarters(self, players):
         n = len(players)
         a = 2 * math.pi / n
-        l = 1 / (2 * math.sin(a / 2))
 
         for i in range(n):
             unit = Unit(player=players[i], world=self)
-            unit.position = (l * math.cos(i * a), l * math.sin(i * a))
+            unit.position = (math.cos(i*a), math.sin(i*a))
             self.units.append(unit)
 
     def update(self):
