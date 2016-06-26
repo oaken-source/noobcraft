@@ -29,14 +29,5 @@ class World(object):
     def unitsOf(self, player):
         return [ unit for unit in self.units if unit.player == player ]
 
-    # TODO use a filter instead!!
     def closestEnemyTo(self, unit):
-        minDistance = 10 # the field is only 1x1
-        result = None
-        for candidate in self.units:
-            if candidate.player != unit.player:
-                distance = candidate.distanceTo(unit)
-                if distance < minDistance:
-                    minDistance = distance
-                    result = candidate
-        return result
+        return min(self.units, key=lambda candidate: candidate.distanceTo(unit))
