@@ -10,8 +10,10 @@ class Unit(object):
     '''
     This class represents a unit of control for the players.
     '''
-    def __init__(self, player):
+    def __init__(self, player, world):
         self.player = player
+        self.world = world
+
         self._x = 0.0
         self._y = 0.0
         self.speed = 0.01

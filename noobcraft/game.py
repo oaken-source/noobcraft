@@ -12,12 +12,13 @@ class Game(object):
     '''
     def __init__(self):
         self.players = []
+        self.world = World(game=self)
 
     def addPlayer(self, player):
         self.players.append(player)
 
     def start(self):
-        self.world = World([ Unit(player) for player in self.players ])
+        self.world.placeStarters(self.players)
 
     def update(self):
         for player in self.players:
