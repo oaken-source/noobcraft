@@ -4,7 +4,7 @@ This module represents the game.
 '''
 
 from noobcraft.gameobjects.world import World
-from noobcraft.gameobjects.unit import Unit
+
 
 class Game(object):
     '''

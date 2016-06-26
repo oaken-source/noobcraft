@@ -16,7 +16,7 @@ class AggressivePlayer(Player):
 
     def act(self, world):
         for unit in world.unitsOf(self):
-            closestEnemy = world.closestEnemyTo(unit)
+            closestEnemy = unit.closestEnemy()
             if closestEnemy is None:
                 unit.moveTowards(self.randomDirection(), 1)
             else:

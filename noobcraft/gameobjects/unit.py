@@ -50,6 +50,12 @@ class Unit(object):
     def distanceTo(self, target):
         return math.hypot(target.x - self.x, target.y - self.y)
 
+    def closestEnemy(self):
+        return min(
+            [ unit for unit in self.world.units if unit.player != self.player ],
+            key=lambda candidate: self.distanceTo(candidate)
+        )
+
     def moveTowards(self, targetPosition, speedFactor):
         speedFactor = max(0, min(1, speedFactor)) # should be 0..1
 

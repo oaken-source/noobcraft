@@ -7,6 +7,7 @@ import math
 
 from noobcraft.gameobjects.unit import Unit
 
+
 class World(object):
     '''
     This class represents a world in noobcraft.
@@ -34,6 +35,3 @@ class World(object):
 
     def unitsOf(self, player):
         return [ unit for unit in self.units if unit.player == player ]
-
-    def closestEnemyTo(self, unit):
-        return min(self.units, key=lambda candidate: candidate.distanceTo(unit))
