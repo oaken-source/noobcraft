@@ -6,6 +6,7 @@ This module defines the world of noobcraft.
 import math
 
 from noobcraft.gameobjects.unit import Unit
+from noobcraft.util.geometry import Vec2
 
 
 class World(object):
@@ -20,11 +21,10 @@ class World(object):
 
     def placeStarters(self, players):
         n = len(players)
-        a = 2 * math.pi / n
 
         for i in range(n):
             unit = Unit(player=players[i], world=self)
-            unit.position = (math.cos(i*a), math.sin(i*a))
+            unit.pos = Vec2(direction=2 * math.pi * i / n)
             self.units.append(unit)
 
     def update(self):
@@ -36,5 +36,4 @@ class World(object):
         return [ unit for unit in self.units if unit.player == player ]
 
     def removeUnit(self, unit):
-        if unit.size <= 0:
-            self.units.remove(unit)
+        self.units.remove(unit)

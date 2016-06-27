@@ -9,18 +9,15 @@ from noobcraft.players.player import Player
 
 class AggressivePlayer(Player):
     '''
-    This demo player just does nothing.
+    This demo player attacks its nearest neighbor.
     '''
-    def randomDirection(self):
-        return [ random.uniform(-1, 1), random.uniform(-1, 1) ]
-
     def act(self, world):
         for unit in world.unitsOf(self):
             closestEnemy = unit.closestEnemy()
             if closestEnemy is None:
-                unit.moveTowards(self.randomDirection(), 1)
+                unit.moveTowards(unit.pos + Vec2(direction=random.uniform(0, 2 * math.pi)), 1)
             else:
                 if unit.inRange(closestEnemy):
                     unit.attack(closestEnemy)
                 else:
-                    unit.moveTowards([closestEnemy.x, closestEnemy.y], 1)
+                    unit.moveTowards(closestEnemy.pos, 1)

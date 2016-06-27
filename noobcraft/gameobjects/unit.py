@@ -5,6 +5,8 @@ This module defines the game objects present in noobcraft.
 
 import math
 
+from noobcraft.util.geometry import Vec2
+
 
 class Unit(object):
     '''
@@ -14,41 +16,23 @@ class Unit(object):
         self.player = player
         self.world = world
 
-        self._x = 0.0
-        self._y = 0.0
+        self.pos = Vec2(0, 0)
         self.speed = 0.01
         self.size = 10
 
     @property
     def x(self):
-        return self._x
-
-    @x.setter
-    def x(self, value):
-        self._x = value
+        return self.pos[0]
 
     @property
     def y(self):
-        return self._y
-
-    @y.setter
-    def y(self, value):
-        self._y = value
-
-    @property
-    def position(self):
-        return (self._x, self._y)
-
-    @position.setter
-    def position(self, value):
-        self._x = value[0]
-        self._y = value[1]
+        return self.pos[1]
 
     def update(self):
         self.size = self.size + math.pow(self.size, 0.2)
 
     def distanceTo(self, target):
-        return math.hypot(target.x - self.x, target.y - self.y)
+        return abs(self.pos - target.pos)
 
     def closestEnemy(self):
         return min(
@@ -60,17 +44,15 @@ class Unit(object):
         speedFactor = max(0, min(1, speedFactor)) # should be 0..1
 
         # movement vector, not normalized
-        v = (targetPosition[0] - self.x, targetPosition[1] - self.y)
-        dv = math.sqrt(v[0] * v[0] + v[1] * v[1])  # length of the vector
+        v = targetPosition - self.pos
+        dv = abs(v)
 
         if dv < speedFactor * self.speed:    # target is super close
             speedFactor = dv    # so we wont need to make the full move, just dv
-            self.x = targetPosition[0]
-            self.y = targetPosition[1]
+            self.pos = targetPosition
         else:
             # offset position by normalized movement vector * speedFactor
-            self.x = self.x + v[0] / dv * speedFactor * self.speed
-            self.y = self.y + v[1] / dv * speedFactor * self.speed
+            self.pos = self.pos + v * (speedFactor * self.speed / dv)
 
         self.size = self.size - speedFactor * math.pow(self.size, 0.1)
         if self.size <= 0:
