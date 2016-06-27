@@ -62,9 +62,9 @@ class Unit(object):
         return self.distanceTo(other) <= ( math.sqrt(self.size) + math.sqrt(other.size) ) / 200
 
     def attack(self, other):
-        if not self.inRange(other) or self.size < 1:
+        if not self.inRange(other):
             return False
-        force = max(1, min(10, self.size, other.size))
+        force = min(10, self.size, other.size)
 
         other.size -= force
         self.size -= force
