@@ -73,6 +73,8 @@ class Unit(object):
             self.y = self.y + v[1] / dv * speedFactor * self.speed
 
         self.size = self.size - speedFactor * math.pow(self.size, 0.1)
+        if self.size <= 0:
+            self.world.removeUnit(self)
 
     def inRange(self, other):
         return self.distanceTo(other) <= ( math.sqrt(self.size) + math.sqrt(other.size) ) / 200
@@ -81,9 +83,11 @@ class Unit(object):
         if not self.inRange(other) or self.size < 1:
             return False
         force = max(1, min(10, self.size, other.size))
-        
+
         other.size -= force
         self.size -= force
-        
+
         if other.size <= 0:
             self.world.removeUnit(other)
+        if self.size <= 0:
+            self.world.removeUnit(self)
