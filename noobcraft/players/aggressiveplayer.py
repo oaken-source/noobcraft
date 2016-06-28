@@ -7,6 +7,7 @@ import random
 
 from noobcraft.players.player import Player
 
+
 class AggressivePlayer(Player):
     '''
     This demo player attacks its nearest neighbor.
