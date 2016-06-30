@@ -1,6 +1,34 @@
 # noobcraft
 
-## Rule Set 2.0 :]
+## Rule Set "Blobs"
+
+######Units
+* Size (both visual, as well as 'physical' (collision)) depends on the amount of resources a unit currently possesses
+* Movement costs are a percentage of the resources possessed (moving is more expensive for bigger units)
+* Resource production are a percentage of the resources possessed (bigger units produce resources faster)
+* Units can only divide, when they reached a fixed size
+* Units can only divide into two new units, each being half the size of the former unit
+* In a fight both fighting units loose the same amount of resources.
+* If a unit runs out of resources, it dies.
+* Costs (for Upgrades) should be auto-balancing
+  * e.g. by following economic rules
+    * the more an upgrade is purchased by anyone/the player, the more expensive it will get
+* Resources can be transfered for free to adjacent units
+
+######Unit Skills
+* Move
+* Fight
+* Transfer resources
+
+##### Upgrades
+anything probably: move faster, do more dmg, produce more resources, allow dividing with smaller resources, ...
+tba
+
+## Rule Set "Items"
+
+Idea: 
+Upgrades as items that can be traded and has a weight (additional movement costs).
+Buildings could be realized similarly (super heavy, more powerful, can be used if unit resides there)
 
 ######Players 
 The game is played by a number of _players_. 
@@ -48,37 +76,28 @@ Basic _items_ a player (and thus its first unit) starts the game with:
 
 Power°: Starting Value / Max. Value / Refill to / Max. Refill
 
+## Rule Set "Agents"
 
+Idea: 
+Model after Nature/Humans.
+Based on [Sugarscape](https://en.wikipedia.org/wiki/Sugarscape)
 
-# Antique rule set starts here
+##### Player
+The task of the player is to tweek the code and settings of the agents in such a way as to allow his agents to perform better than the agents of the other players.
 
-## Rules of the game - Proposals / Ideas
+##### Tournaments
+* Strength in numbers: 
+  Each player starts on a empty map and tries to have the biggest possible agent population when the simulation finishes.
+* Tribal wars:
+  All players start on the same map. When the simulation finishes, the success of a player is measured by one of these:
+  * The number of agents in the population.
+  * The total amount of resources gathered over the whole simulation time.
+  * The sum of resources possessed by the agents.
+  * The total amount of resources spend over the whole simulation time.
 
-* Size (both visual, as well as 'physical' (collision)) depends on the amount of resources an entity currently possesses
-* Movement costs are a percentage of the resources possessed (moving is more expensive for bigger entities)
-* Resource production are a percentage of the resources possessed (bigger entities produce resources faster)
-* Entities can only divide, when they reached a fixed size
-* Entities can only divide into two new entities, each being half the size of the former entity
-* In a fight both fighting entities loose the same amount of resources.
-* If an entity runs out of resources, it dies.
-* Costs (for Upgrades) should be auto-balancing
-  * e.g. by following economic rules
-    * the more an upgrade is purchased by anyone/the player, the more expensive it will get
-* Resources can be transfered for free to adjacent entities
-
-### Skills
-* Move
-* Fight
-* Transfer resources
-
-### Upgrades
-anything probably: move faster, do more dmg, produce more resources, allow dividing with smaller resources, ...
-tba
-
-## Crazy future ideas
-* Radius of sight
-* Upgrades as equipment that can be traded and has a weight (additional movement costs)
-  * Buildings could be realized similarly (super heavy, more powerful, can be used if entity resides there)
-* Model after Nature/Humans
-* Multiple resources and trading
-* Aging? Injuries? -> reduction in efficiency
+##### Agent
+Agents have a vision; they can move as far as they can see.
+Agents have a metabolism: Each game round, they will loose the amount of resources of their metabolism. If the run out of resources, they die.
+Agents have an age. Players can use the age to implement a fertility range and death of old age, if they like.
+Agents can die, reproduce, move, gather all resources on the location they reside.
+Agents can trade and fight.
