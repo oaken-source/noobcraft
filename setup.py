@@ -12,6 +12,9 @@ setup(
 
     packages=[
         'noobcraft',
+        'noobcraft.gameobjects',
+        'noobcraft.players',
+        'noobcraft.util',
     ],
 
     install_requires=[],
