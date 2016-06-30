@@ -18,14 +18,14 @@ class Renderer(PrimitiveRenderer):
     def drawTerrain(self, ctx, r, game):
         self.fillRectangle(ctx, r, [0.2, 0.8, 0.2])
 
-    def drawPlayers(self, ctx, r, game):
-        for playerId, player in enumerate(game.players):
-            self.drawText(ctx, r.x, r.y + 20 * playerId, player.name, player.color)
+    def drawActors(self, ctx, r, game):
+        for i, actor in enumerate(game.actors):
+            text = "%s's %s" % (actor.creator, actor.name)
+            self.drawText(ctx, r.x, r.y + 20 * i, text, actor.primary_color)
 
     def drawUnits(self, ctx, r, game):
-        for player in game.players:
-            for unit in game.world.unitsOf(player):
-                self.fillCircle(ctx, 400 + 200 * unit.x, 300 + 200 * unit.y, math.sqrt(unit.size), player.color)
+        for unit in game.world.units:
+            self.fillCircle(ctx, 400 + 200 * unit.x, 300 + 200 * unit.y, math.sqrt(unit.size), unit.owner.primary_color, unit.owner.secondary_color)
 
     def draw(self, game, ctx):
         self.setFont(ctx, 'Arial', 14)
@@ -35,4 +35,4 @@ class Renderer(PrimitiveRenderer):
         self.drawUnits(ctx, r, game)
 
         r = r.offset(5, 20)
-        self.drawPlayers(ctx, r, game)
+        self.drawActors(ctx, r, game)

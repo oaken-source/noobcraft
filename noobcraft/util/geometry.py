@@ -31,13 +31,13 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
         '''
         produce the sum of two vectors
         '''
-        return type(self)(self.x.__add__(other.x), self.y.__abs__(other.y))
+        return type(self)(self.x + other.x, self.y + other.y)
 
     def __sub__(self, other):
         '''
         produce the difference of two vectors
         '''
-        return type(self)(self.x.__sub__(other.x), self.y.__sub__(other.y))
+        return type(self)(self.x - other.x, self.y - other.y)
 
     def __mul__(self, other):
         '''
@@ -45,7 +45,7 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
         '''
         if isinstance(other, type(self)):
             return self.x * other.x + self.y * other.y
-        return type(self)(self.x.__mul__(other), self.y.__mul__(other))
+        return type(self)(self.x * other, self.y * other)
 
     def __div__(self, other):
         '''

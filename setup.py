@@ -13,7 +13,7 @@ setup(
     packages=[
         'noobcraft',
         'noobcraft.gameobjects',
-        'noobcraft.players',
+        'noobcraft.actors',
         'noobcraft.util',
     ],
 

@@ -21,10 +21,11 @@ class PrimitiveRenderer(object):
         ctx.fillStyle = 'rgba(' + str(math.floor(rgb[0] * 255)) + ',' + str(math.floor(rgb[1] * 255)) + ',' + str(math.floor(rgb[2] * 255)) + ',255)'
         ctx.strokeStyle = ctx.fillStyle
 
-    def fillCircle(self, ctx, x, y, r, rgb):
-        self.setColor(ctx, rgb)
+    def fillCircle(self, ctx, x, y, r, rgb1, rgb2):
+        self.setColor(ctx, rgb1)
         ctx.beginPath()
         ctx.arc(x, y, r, 0, 2 * math.pi)
+        self.setColor(ctx, rgb2)
         ctx.fill()
 
     def drawRectangle(self, ctx, r, rgb):
