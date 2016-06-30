@@ -26,25 +26,25 @@ tba
 
 ## Rule Set "Items"
 
-Idea: 
+Idea:
 Upgrades as items that can be traded and has a weight (additional movement costs).
 Buildings could be realized similarly (super heavy, more powerful, can be used if unit resides there)
 
-######Players 
-The game is played by a number of _players_. 
+######Players
+The game is played by a number of _players_.
 _Players_ control _units_ that interact with the _world_.
 
 ######World
-As a _player_ you have access to the _world_ object. 
+As a _player_ you have access to the _world_ object.
 It will provide you with information about the _map_ and all _units_ visible to you.
 
 ######Map
-The _map_ is the area a unit can move around in. 
+The _map_ is the area a unit can move around in.
 It is populated by all the _units_ in the game.
 If there are resources in the game, they are realized as _items_ positioned on the ground.
 
 ######Units
-A _unit_ belongs to a _player_. 
+A _unit_ belongs to a _player_.
 It has a location on the _map_.
 In each round, a _unit_ may use each and all the _items_ it is in the range of.
 
@@ -78,7 +78,7 @@ Power°: Starting Value / Max. Value / Refill to / Max. Refill
 
 ## Rule Set "Agents"
 
-Idea: 
+Idea:
 Model after Nature/Humans.
 Based on [Sugarscape](https://en.wikipedia.org/wiki/Sugarscape)
 
@@ -86,7 +86,7 @@ Based on [Sugarscape](https://en.wikipedia.org/wiki/Sugarscape)
 The task of the player is to tweek the code and settings of the agents in such a way as to allow his agents to perform better than the agents of the other players.
 
 ##### Tournaments
-* Strength in numbers: 
+* Strength in numbers:
   Each player starts on a empty map and tries to have the biggest possible agent population when the simulation finishes.
 * Tribal wars:
   All players start on the same map. When the simulation finishes, the success of a player is measured by one of these:
