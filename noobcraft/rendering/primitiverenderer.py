@@ -43,3 +43,7 @@ class PrimitiveRenderer(object):
     def drawText(self, ctx, x, y, text, rgb):
         self.setColor(ctx, rgb)
         ctx.fillText(text, x, y)
+
+    def drawImage(self, ctx, x, y, img):
+        ctx.drawImage(img, x, y);
+        
