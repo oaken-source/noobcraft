@@ -20,6 +20,10 @@ class Unit(object):
         self.speed = 0.01
         self.size = 10
 
+        self.characterModel = 0
+        self.direction = 'S'
+        self.isMoving = False
+
     @property
     def x(self):
         return self.pos[0]
@@ -28,8 +32,20 @@ class Unit(object):
     def y(self):
         return self.pos[1]
 
-    def update(self):
+    def update(self):        
         self.size = self.size + math.pow(self.size, 0.2)
+
+    def setdirection(self, dx, dy):
+        if abs(dx) > abs(dy):
+            if dx < 0:
+                self.direction = 'W'
+            else:
+                self.direction = 'E'
+        else:
+            if dy < 0:
+                self.direction = 'N'
+            else:
+                self.direction = 'S'
 
     def moveTowards(self, targetPosition, speedFactor):
         speedFactor = max(0, min(1, speedFactor)) # should be 0..1
@@ -41,9 +57,13 @@ class Unit(object):
         if dv < speedFactor * self.speed:    # target is super close
             speedFactor = dv    # so we wont need to make the full move, just dv
             self.pos = targetPosition
+            self.direction = 'S'
+            self.isMoving = False
         else:
             # offset position by normalized movement vector * speedFactor
             self.pos = self.pos + v * (speedFactor * self.speed / dv)
+            self.setdirection(v.x, v.y)
+            self.isMoving = True
 
         self.size = self.size - speedFactor * math.pow(self.size, 0.1)
         if self.size <= 0:

@@ -46,4 +46,7 @@ class PrimitiveRenderer(object):
 
     def drawImage(self, ctx, x, y, img):
         ctx.drawImage(img, x, y);
+
+    def drawImageX(self, ctx, img, sx, sy, sw, sh, dx, dy, dw, dh):
+        ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
         

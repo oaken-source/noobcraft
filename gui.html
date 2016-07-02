@@ -21,7 +21,7 @@
             game = Game()
             renderer = Renderer()
 
-            def drawGame():
+            def drawGame(elapsedSeconds):
                 canvas = document.getElementById('mycanvas')
 
                 if canvas.getContext is None:
@@ -30,19 +30,19 @@
                     ctx = canvas.getContext('2d')
                     ctx.canvas.width  = 800
                     ctx.canvas.height = 600
-                    renderer.draw(game, ctx)
+                    renderer.draw(game, ctx, elapsedSeconds)
 
             def gameloop():
                 timer.set_timeout(gameloop, 20)
 
                 game.update()
-                drawGame()
+                drawGame(0.020)
 
             def gameloopDebug():
                 game.update()
                 game.update()
                 game.update()
-                drawGame()
+                drawGame(20)
 
             game.addActor(LazyActor())
             game.addActor(RandomActor())
