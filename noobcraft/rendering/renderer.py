@@ -5,43 +5,82 @@ This module handles the rendering of noobcraft.
 
 import math
 
-from browser import html
-from noobcraft.rendering.primitiverenderer import PrimitiveRenderer
-from noobcraft.rendering.rectangle import Rectangle
-from noobcraft.rendering.character import Character
-
-class Renderer(PrimitiveRenderer):    
+class Renderer(object):
     '''
     This class represents a world in noobcraft.
     '''
     def __init__(self):
-        self.tilewidth = 48
-        self.tileheight = 48
-        self.terrainImage=html.IMG('', src='assets/grass.png')
-        self.characters = []
-        self.characters.append(Character(0))
+        self.zoom = 1
+        self.toDraw = []
+        self.fontSize = 14
 
-    def drawTerrain(self, ctx, r, game, elapsedSeconds):
-        for x in range(r.x, r.x + r.w, self.tilewidth):
-            for y in range(r.y, r.y + r.h, self.tileheight):
-                self.drawImage(ctx, x, y, self.terrainImage)
+    def setCtx(self, ctx):
+        self.ctx = ctx
 
-    def drawActors(self, ctx, r, game, elapsedSeconds):
-        for i, actor in enumerate(game.actors):
-            text = "%s's %s" % (actor.creator, actor.name)
-            self.drawText(ctx, r.x, r.y + 20 * i, text, actor.primary_color)
+    def flush(self):
+        self.toDraw = sorted(self.toDraw, key=lambda x: x[0])
+        for todo in self.toDraw:
+            todo[1](*todo[2])
+        self.toDraw = []
 
-    def drawUnits(self, ctx, r, game, elapsedSeconds):
-        for unit in game.world.units:
-            self.characters[unit.characterModel].draw(ctx, 400 + 200 * unit.x, 300 + 200 * unit.y, unit, elapsedSeconds)
-            #self.fillCircle(ctx, 400 + 200 * unit.x, 300 + 200 * unit.y, math.sqrt(unit.size), unit.owner.primary_color, unit.owner.secondary_color)
+    @property
+    def width(self):
+        return self.ctx.canvas.width
 
-    def draw(self, game, ctx, elapsedSeconds):
-        self.setFont(ctx, 'Arial', 14)
+    @property
+    def height(self):
+        return self.ctx.canvas.height
 
-        r = Rectangle(0, 0, ctx.canvas.width-10, ctx.canvas.height-10)
-        self.drawTerrain(ctx, r, game, elapsedSeconds)
-        self.drawUnits(ctx, r, game, elapsedSeconds)
+    def setFont(self, name, size):
+        self.fontName = name
+        self.fontSize = size
+        self.ctx.font = str(size) + 'px ' + name        
 
-        r = r.offset(5, 20)
-        self.drawActors(ctx, r, game, elapsedSeconds)
+    def setColor(self, rgb):
+        self.ctx.fillStyle = 'rgba(' + str(math.floor(rgb[0] * 255)) + ',' + str(math.floor(rgb[1] * 255)) + ',' + str(math.floor(rgb[2] * 255)) + ',255)'
+        self.ctx.strokeStyle = self.ctx.fillStyle
+
+    # real drawing
+
+    def fillCircleNow(self, x, y, r, rgb1, rgb2):
+        self.setColor(rgb1)
+        self.ctx.beginPath()
+        self.ctx.arc(x, y, r, 0, 2 * math.pi)
+        self.setColor(rgb2)
+        self.ctx.fill()
+
+    def drawRectangleNow(self, r, rgb):
+        self.setColor(rgb)
+        self.ctx.beginPath()
+        self.ctx.rect(r.x, r.y, r.w, r.h)
+        self.ctx.stroke()
+
+    def fillRectangleNow(self, r, rgb):
+        self.setColor(rgb)
+        self.ctx.beginPath()
+        self.ctx.rect(r.x, r.y, r.w, r.h)
+        self.ctx.fill()
+
+    def drawTextNow(self, x, y, text, rgb):
+        self.setColor(rgb)
+        self.ctx.fillText(text, x, y)
+
+    def drawImageNow(self, img, sx, sy, sw, sh, dx, dy, dw, dh):
+        self.ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
+        
+    # will not be drawn until flush is called 
+
+    def fillCircle(self, x, y, r, rgb1, rgb2):
+        self.toDraw.append([y - r, self.fillCircleNow, [x, y, r, rgb1, rgb2]])
+
+    def drawRectangle(self, r, rgb):
+        self.toDraw.append([r.y, self.drawRectangleNow, [r, rgb]])
+
+    def fillRectangle(self, r, rgb):
+        self.toDraw.append([r.y, self.fillRectangleNow, [r, rgb]])
+
+    def drawText(self, x, y, text, rgb):
+        self.toDraw.append([y, self.drawTextNow, [x, y, text, rgb]])
+
+    def drawImage(self, img, sx, sy, sw, sh, dx, dy, dw, dh):
+        self.toDraw.append([dy, self.drawImageNow, [img, sx, sy, sw, sh, dx, dy, dw, dh]])

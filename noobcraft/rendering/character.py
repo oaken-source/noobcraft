@@ -1,15 +1,13 @@
 import math
 
 from browser import html
-from noobcraft.rendering.primitiverenderer import PrimitiveRenderer
 from noobcraft.rendering.rectangle import Rectangle
 
-class Character(PrimitiveRenderer):
+class Character():
     '''
     This class represents a world in noobcraft.
     '''
     def __init__(self, id):
-    	self.zoom = 1
         self.image = html.IMG('', src='assets/characters/character-model-' + str(id) + '.png')
         self.directionMap = { 'S': 0, 'W': 1, 'E': 2, 'N': 3 }
         
@@ -26,23 +24,16 @@ class Character(PrimitiveRenderer):
             if self.frameIndex > self.maxFrameIndex:
                 self.frameIndex = 0
 
-    def draw(self, ctx, x, y, unit, elapsedSeconds):
+    def draw(self, renderer, x, y, unit, elapsedSeconds):
         self.update(elapsedSeconds)
         if not unit.isMoving:
         	frame = 1
         else:
         	frame = self.frameIndex
-        self.drawImageX(
-        	ctx,
-        	self.image, 
-        	frame * 48, 
-        	self.directionMap[unit.direction] * 48, 
-        	48, 
-        	48, 
-        	x - 24 * self.zoom, 
-        	y - 24 * self.zoom, 
-        	48 * self.zoom, 
-        	48 * self.zoom
+        renderer.drawImage(
+            self.image, 
+        	frame * 48, self.directionMap[unit.direction] * 48, 48, 48, # source
+        	x - 24, y - 24, 48, 48 # destination
     	)
-    	self.drawRectangle(ctx, Rectangle(x - 20 * self.zoom, y - 24 * self.zoom - 4, 40 * self.zoom, 4), [0, 0, 0])
-    	self.fillRectangle(ctx, Rectangle(x - 20 * self.zoom, y - 24 * self.zoom - 3, min(math.sqrt(unit.size), 40 * self.zoom), 2), [0.8, 0, 0])
+    	renderer.drawRectangle(Rectangle(x - 20, y - 24 - 4, 40, 4), [0, 0, 0])
+    	renderer.fillRectangle(Rectangle(x - 20, y - 24 - 3, min(math.sqrt(unit.size), 40), 2), [0.8, 0, 0])

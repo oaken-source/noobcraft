@@ -15,11 +15,12 @@
 
             from noobcraft.game import Game
             from noobcraft.rendering.renderer import Renderer
+            from noobcraft.rendering.rpgtheme import RPGTheme
             from noobcraft.actors.demo import LazyActor, RandomActor, BerserkActor
-
 
             game = Game()
             renderer = Renderer()
+            theme = RPGTheme()
 
             def drawGame(elapsedSeconds):
                 canvas = document.getElementById('mycanvas')
@@ -30,7 +31,8 @@
                     ctx = canvas.getContext('2d')
                     ctx.canvas.width  = 800
                     ctx.canvas.height = 600
-                    renderer.draw(game, ctx, elapsedSeconds)
+                    renderer.setCtx(ctx)
+                    theme.draw(renderer, game, elapsedSeconds)
 
             def gameloop():
                 timer.set_timeout(gameloop, 20)
