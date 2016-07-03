@@ -38,10 +38,19 @@ class BasicTheme():
         self.drawActors(renderer, r, game, elapsedSeconds)
 
 class RPGTheme(BasicTheme):    
-    
+
+    def directionMap(self, unit):
+        if abs(unit.direction) <= 45: # up
+            return 3
+        if 45 < unit.direction and unit.direction < 135: # left
+            return 2
+        if -135 < unit.direction and unit.direction < -45: # right
+            return 1
+        return 0 # down
+
     def loadImages(self):
         self.terrainImage=html.IMG('', src='assets/rpg-theme/grass.png')
-        self.characters.append(Character('assets/rpg-theme/characters/character-model-0.png', 48, 48, 2))
+        self.characters.append(Character('assets/rpg-theme/characters/character-model-0.png', 48, 48, 2, self.directionMap))
 
     def __init__(self):
         self.tilewidth = 48
@@ -59,7 +68,24 @@ class RPGTheme(BasicTheme):
             self.characters[unit.characterModel].draw(renderer, 400 + 200 * unit.x, 300 + 200 * unit.y, unit, elapsedSeconds)
 
 class RealisticTheme(RPGTheme):    
+
+    def directionMap(self, unit):
+        if abs(unit.direction) <= 22.5: # N
+            return 3
+        if 22.5 < unit.direction and unit.direction <= 67.5: # NE
+            return 7
+        if 67.5 < unit.direction and unit.direction <= 112.5: # E
+            return 2
+        if 112.5 < unit.direction and unit.direction <= 157.5: # SE
+            return 6
+        if -157.5 < unit.direction and unit.direction <= -112.5: # SW
+            return 4
+        if -112.5 < unit.direction and unit.direction <= -67.5: # W
+            return 1
+        if -67.5 < unit.direction and unit.direction <= -22.5: # NW
+            return 5
+        return 0 # S
     
     def loadImages(self):
         self.terrainImage=html.IMG('', src='assets/rpg-theme/grass.png')
-        self.characters.append(Character('assets/realistic-theme/characters/character-model-0-running.png', 128, 128, 7))
+        self.characters.append(Character('assets/realistic-theme/characters/character-model-0-running.png', 128, 128, 7, self.directionMap))

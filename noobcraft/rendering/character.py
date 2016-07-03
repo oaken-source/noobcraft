@@ -7,9 +7,9 @@ class Character():
     '''
     This class represents a world in noobcraft.
     '''
-    def __init__(self, imageSource, tileW, tileH, maxFrameIndex):
+    def __init__(self, imageSource, tileW, tileH, maxFrameIndex, directionMap):
         self.image = html.IMG('', src=imageSource)
-        self.directionMap = { 'S': 0, 'W': 1, 'E': 2, 'N': 3 }
+        self.directionMap = directionMap
 
         self.tileW = tileW
         self.tileHalfW = tileW / 2
@@ -37,7 +37,7 @@ class Character():
             frame = self.frameIndex
         renderer.drawImage(
             self.image,
-            frame * self.tileW, self.directionMap[unit.direction] * self.tileH, self.tileW, self.tileH, # source
+            frame * self.tileW, self.directionMap(unit) * self.tileH, self.tileW, self.tileH, # source
             x - self.tileHalfW, y - self.tileHalfH, self.tileW, self.tileH # destination
         )
         renderer.drawRectangle(Rectangle(x - self.tileW * 0.4, y - self.tileHalfH - 4, self.tileW * 0.8, 4), [0, 0, 0])
