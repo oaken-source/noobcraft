@@ -16,11 +16,14 @@
             <button id="moveUpButton">up (w)</button>
             <button id="moveDownButton">down (s)</button>
             <button id="themeChangeButton">change theme (t)</button>
+            <span><span id="fps">0</span> fps</span>
         </div>
         
         <canvas id="mycanvas" style="border:1px solid #000000;">Loading... Please wait. :)</canvas>
 
         <script type="text/python">
+            import datetime 
+
             from browser import document, timer, alert, console
 
             from noobcraft.game import Game
@@ -32,6 +35,11 @@
             document.renderer = Renderer()
             document.themes = [BasicTheme(), RPGTheme(), RealisticTheme()]
             document.themeIndex = 2
+
+            # source: http://stackoverflow.com/questions/4787431/check-fps-in-js
+            document.filterStrength = 10
+            document.frameTime = 0
+            document.lastloop = datetime.datetime.now().timestamp()
 
             def drawGame(elapsedSeconds):
                 canvas = document.getElementById('mycanvas')
@@ -46,6 +54,11 @@
                     document.themes[document.themeIndex].draw(document.renderer, document.game, elapsedSeconds)
 
             def gameloop():
+                document.thisLoop = datetime.datetime.now().timestamp()
+                document.frameTime += (document.thisLoop - document.lastloop - document.frameTime) / document.filterStrength
+                document.lastLoop = document.thisLoop
+                document['fps'].innerHTML = int(1/document.frameTime)
+
                 timer.set_timeout(gameloop, 20)
 
                 document.game.update()
