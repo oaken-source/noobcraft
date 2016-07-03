@@ -7,14 +7,19 @@ class Character():
     '''
     This class represents a world in noobcraft.
     '''
-    def __init__(self, id):
-        self.image = html.IMG('', src='assets/characters/character-model-' + str(id) + '.png')
+    def __init__(self, imageSource, tileW, tileH, maxFrameIndex):
+        self.image = html.IMG('', src=imageSource)
         self.directionMap = { 'S': 0, 'W': 1, 'E': 2, 'N': 3 }
 
-        self.frameUpdateDelay = 0.4
+        self.tileW = tileW
+        self.tileHalfW = tileW / 2
+        self.tileH = tileH
+        self.tileHalfH = tileH / 2
+
+        self.frameUpdateDelay = 0.3
         self.elapsedSinceLastFrameUpdate = 0
         self.frameIndex = 1
-        self.maxFrameIndex = 2
+        self.maxFrameIndex = maxFrameIndex
 
     def update(self, elapsedSeconds):
         self.elapsedSinceLastFrameUpdate += elapsedSeconds
@@ -32,8 +37,8 @@ class Character():
             frame = self.frameIndex
         renderer.drawImage(
             self.image,
-            frame * 48, self.directionMap[unit.direction] * 48, 48, 48, # source
-            x - 24, y - 24, 48, 48 # destination
+            frame * self.tileW, self.directionMap[unit.direction] * self.tileH, self.tileW, self.tileH, # source
+            x - self.tileHalfW, y - self.tileHalfH, self.tileW, self.tileH # destination
         )
-        renderer.drawRectangle(Rectangle(x - 20, y - 24 - 4, 40, 4), [0, 0, 0])
-        renderer.fillRectangle(Rectangle(x - 20, y - 24 - 3, min(math.sqrt(unit.size), 40), 2), [0.8, 0, 0])
+        renderer.drawRectangle(Rectangle(x - self.tileW * 0.4, y - self.tileHalfH - 4, self.tileW * 0.8, 4), [0, 0, 0])
+        renderer.fillRectangle(Rectangle(x - self.tileW * 0.4, y - self.tileHalfH - 3, min(math.sqrt(unit.size), self.tileW * 0.8), 2), [0.8, 0, 0])
