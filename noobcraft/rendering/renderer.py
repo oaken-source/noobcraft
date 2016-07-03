@@ -5,14 +5,19 @@ This module handles the rendering of noobcraft.
 
 import math
 
+from noobcraft.rendering.rectangle import Rectangle
+
 class Renderer(object):
     '''
     This class represents a world in noobcraft.
     '''
     def __init__(self):
-        self.zoom = 1
         self.toDraw = []
         self.fontSize = 14
+        self.zoom = 1
+        self.offsetX = 0
+        self.offsetY = 0
+        self.transforming = True
 
     def setCtx(self, ctx):
         self.ctx = ctx
@@ -33,8 +38,11 @@ class Renderer(object):
 
     def setFont(self, name, size):
         self.fontName = name
-        self.fontSize = size
-        self.ctx.font = str(size) + 'px ' + name
+        if self.transforming:
+            self.fontSize = size * self.zoom
+        else:
+            self.fontSize = size
+        self.ctx.font = str(self.fontSize) + 'px ' + name
 
     def setColor(self, rgb):
         self.ctx.fillStyle = 'rgba(' + str(math.floor(rgb[0] * 255)) + ',' + str(math.floor(rgb[1] * 255)) + ',' + str(math.floor(rgb[2] * 255)) + ',255)'
@@ -45,17 +53,24 @@ class Renderer(object):
     def fillCircleNow(self, x, y, r, rgb1, rgb2):
         self.setColor(rgb1)
         self.ctx.beginPath()
-        self.ctx.arc(x, y, r, 0, 2 * math.pi)
+        if self.transforming:
+            self.ctx.arc((x + self.offsetX)*self.zoom, (y + self.offsetY)*self.zoom, r * self.zoom, 0, 2 * math.pi)
+        else:
+            self.ctx.arc(x, y, r, 0, 2 * math.pi)
         self.setColor(rgb2)
         self.ctx.fill()
 
     def drawRectangleNow(self, r, rgb):
+        if self.transforming:
+            r = r.offset(self.offsetX, self.offsetY).zoom(self.zoom)
         self.setColor(rgb)
         self.ctx.beginPath()
         self.ctx.rect(r.x, r.y, r.w, r.h)
         self.ctx.stroke()
 
     def fillRectangleNow(self, r, rgb):
+        if self.transforming:
+            r = r.offset(self.offsetX, self.offsetY).zoom(self.zoom)
         self.setColor(rgb)
         self.ctx.beginPath()
         self.ctx.rect(r.x, r.y, r.w, r.h)
@@ -63,10 +78,15 @@ class Renderer(object):
 
     def drawTextNow(self, x, y, text, rgb):
         self.setColor(rgb)
-        self.ctx.fillText(text, x, y)
+        if self.transforming:
+            self.ctx.fillText(text, (x + self.offsetX)*self.zoom, (y + self.offsetY)*self.zoom)
+        else:
+            self.ctx.fillText(text, x, y)
 
     def drawImageNow(self, img, sx, sy, sw, sh, dx, dy, dw, dh):
-        self.ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
+        if self.transforming:
+            r = Rectangle(dx, dy, dw, dh).offset(self.offsetX, self.offsetY).zoom(self.zoom)
+        self.ctx.drawImage(img, sx, sy, sw, sh, r.x, r.y, r.w, r.h)
 
     # will not be drawn until flush is called
 

@@ -23,8 +23,8 @@ class BasicTheme():
 
     def drawActors(self, renderer, r, game, elapsedSeconds):
         for i, actor in enumerate(game.actors):
-            text = "%s's %s" % (actor.creator, actor.name)
-            renderer.drawTextNow(r.x, r.y + 20 * i, text, actor.primary_color)
+            text = "%s's %s" % (actor.creator, actor.name)            
+            renderer.drawTextNow(r.x, r.y + 22 * i, text, actor.primary_color)
 
     def draw(self, renderer, game, elapsedSeconds):
         renderer.setFont('Arial', 14)
@@ -35,7 +35,10 @@ class BasicTheme():
         renderer.flush()
 
         r = r.offset(5, 20)
+        renderer.transforming = False
+        renderer.setFont('Arial', 16)
         self.drawActors(renderer, r, game, elapsedSeconds)
+        renderer.transforming = True
 
 class RPGTheme(BasicTheme):    
 

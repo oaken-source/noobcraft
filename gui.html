@@ -9,12 +9,16 @@
     <body onload="brython(1)">
 
         <div>
-            <button>zoom in</button>
-            <button>zoom out</button>
+            <button id="zoomInButton">zoom in</button>
+            <button id="zoomOutButton">zoom out</button>
+            <button id="moveLeftButton">left</button>
+            <button id="moveRightButton">right</button>
+            <button id="moveUpButton">up</button>
+            <button id="moveDownButton">down</button>
             <button id="themeChangeButton">change theme</button>
         </div>
         
-        <canvas id="mycanvas">Loading... Please wait. :)</canvas>
+        <canvas id="mycanvas" style="border:1px solid #000000;">Loading... Please wait. :)</canvas>
 
         <script type="text/python">
             from browser import document, timer, alert
@@ -24,9 +28,9 @@
             from noobcraft.rendering.themes import BasicTheme, RPGTheme, RealisticTheme
             from noobcraft.actors.demo import LazyActor, RandomActor, BerserkActor
 
-            game = Game()
-            renderer = Renderer()
-            themes = [BasicTheme(), RPGTheme(), RealisticTheme()]
+            document.game = Game()
+            document.renderer = Renderer()
+            document.themes = [BasicTheme(), RPGTheme(), RealisticTheme()]
             document.themeIndex = 2
 
             def drawGame(elapsedSeconds):
@@ -36,34 +40,58 @@
                     alert('You need Safari or Firefox 1.5+ to see this demo.')
                 else:
                     ctx = canvas.getContext('2d')
-                    ctx.canvas.width  = 800
-                    ctx.canvas.height = 600
-                    renderer.setCtx(ctx)
-                    themes[document.themeIndex].draw(renderer, game, elapsedSeconds)
+                    ctx.canvas.width  = 900
+                    ctx.canvas.height = 800
+                    document.renderer.setCtx(ctx)
+                    document.themes[document.themeIndex].draw(document.renderer, document.game, elapsedSeconds)
 
             def gameloop():
                 timer.set_timeout(gameloop, 20)
 
-                game.update()
+                document.game.update()
                 drawGame(0.020)
 
             def gameloopDebug():
-                game.update()
-                game.update()
-                game.update()
+                document.game.update()
+                document.game.update()
+                document.game.update()
                 drawGame(20)
 
+            def zoomIn(event):
+                document.renderer.zoom = document.renderer.zoom * 2
+
+            def zoomOut(event):
+                document.renderer.zoom = document.renderer.zoom / 2
+
+            def moveLeft(event):
+                document.renderer.offsetX -= 48
+
+            def moveRight(event):
+                document.renderer.offsetX += 48
+
+            def moveUp(event):
+                document.renderer.offsetY -= 48
+
+            def moveDown(event):
+                document.renderer.offsetY += 48
+
             def nextTheme(event):
-                document.themeIndex = (document.themeIndex + 1) % len(themes)
+                document.themeIndex = (document.themeIndex + 1) % len(document.themes)
 
-            game.addActor(LazyActor())
-            game.addActor(RandomActor())
-            game.addActor(BerserkActor())
+            document.game.addActor(LazyActor())
+            document.game.addActor(RandomActor())
+            document.game.addActor(BerserkActor())
 
-            game.start()
+            document.game.start()
             gameloop();
             #gameloopDebug();
 
+            document['zoomInButton'].bind('click',zoomIn)
+            document['zoomOutButton'].bind('click',zoomOut)
+            document['moveLeftButton'].bind('click',moveLeft)
+            document['moveRightButton'].bind('click',moveRight)
+            document['moveUpButton'].bind('click',moveUp)
+            document['moveDownButton'].bind('click',moveDown)
             document['themeChangeButton'].bind('click',nextTheme)
         </script>
     </body>
