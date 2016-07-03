@@ -8,7 +8,13 @@
 
     <body onload="brython(1)">
 
-        <canvas id="mycanvas" />
+        <div>
+            <button>zoom in</button>
+            <button>zoom out</button>
+            <button id="themeChangeButton">change theme</button>
+        </div>
+        
+        <canvas id="mycanvas">Loading... Please wait. :)</canvas>
 
         <script type="text/python">
             from browser import document, timer, alert
@@ -20,7 +26,8 @@
 
             game = Game()
             renderer = Renderer()
-            theme = [BasicTheme(), RPGTheme(), RealisticTheme()]
+            themes = [BasicTheme(), RPGTheme(), RealisticTheme()]
+            document.themeIndex = 2
 
             def drawGame(elapsedSeconds):
                 canvas = document.getElementById('mycanvas')
@@ -32,7 +39,7 @@
                     ctx.canvas.width  = 800
                     ctx.canvas.height = 600
                     renderer.setCtx(ctx)
-                    theme[2].draw(renderer, game, elapsedSeconds)
+                    themes[document.themeIndex].draw(renderer, game, elapsedSeconds)
 
             def gameloop():
                 timer.set_timeout(gameloop, 20)
@@ -46,6 +53,9 @@
                 game.update()
                 drawGame(20)
 
+            def nextTheme(event):
+                document.themeIndex = (document.themeIndex + 1) % len(themes)
+
             game.addActor(LazyActor())
             game.addActor(RandomActor())
             game.addActor(BerserkActor())
@@ -53,6 +63,8 @@
             game.start()
             gameloop();
             #gameloopDebug();
+
+            document['themeChangeButton'].bind('click',nextTheme)
         </script>
     </body>
 </html>
