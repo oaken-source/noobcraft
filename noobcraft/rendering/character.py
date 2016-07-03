@@ -40,5 +40,5 @@ class Character():
             frame * self.tileW, self.directionMap(unit) * self.tileH, self.tileW, self.tileH, # source
             x - self.tileHalfW, y - self.tileHalfH, self.tileW, self.tileH # destination
         )
-        renderer.drawRectangle(Rectangle(x - self.tileW * 0.4, y - self.tileHalfH - 4, self.tileW * 0.8, 4), [0, 0, 0])
-        renderer.fillRectangle(Rectangle(x - self.tileW * 0.4, y - self.tileHalfH - 3, min(math.sqrt(unit.size), self.tileW * 0.8), 2), [0.8, 0, 0])
+        renderer.drawRectangle(Rectangle(x - self.tileW * 0.25, y - self.tileHalfH - 4, self.tileW * 0.5, 4), [0, 0, 0])
+        renderer.fillRectangle(Rectangle(x - self.tileW * 0.25, y - self.tileHalfH - 3, min(math.sqrt(unit.size) * 0.5, self.tileW * 0.5), 2), [0.8, 0, 0])

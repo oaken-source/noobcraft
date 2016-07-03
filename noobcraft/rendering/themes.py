@@ -90,5 +90,5 @@ class RealisticTheme(RPGTheme):
         return 0 # S
     
     def loadImages(self):
-        self.terrainImage=html.IMG('', src='assets/rpg-theme/grass.png')
+        self.terrainImage=html.IMG('', src='assets/realistic-theme/ground.png')
         self.characters.append(Character('assets/realistic-theme/characters/character-model-0-running.png', 128, 128, 7, self.directionMap))
