@@ -64,3 +64,9 @@ class Vec2(namedtuple('Vec2', ('x', 'y'))):
         produce the floored quotient of a vector and scalar (python3)
         '''
         return type(self)(self.x.__floordiv__(other), self.y.__floordiv__(other))
+
+    def normalized(self):
+        '''
+        produce a vector with the same direction and a magnitude of 1
+        '''
+        return self / abs(self)

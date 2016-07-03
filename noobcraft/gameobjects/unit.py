@@ -32,7 +32,7 @@ class Unit(object):
     def y(self):
         return self.pos[1]
 
-    def update(self):        
+    def update(self):
         self.size = self.size + math.pow(self.size, 0.2)
 
     def setdirection(self, dx, dy):

@@ -34,7 +34,7 @@ class Renderer(object):
     def setFont(self, name, size):
         self.fontName = name
         self.fontSize = size
-        self.ctx.font = str(size) + 'px ' + name        
+        self.ctx.font = str(size) + 'px ' + name
 
     def setColor(self, rgb):
         self.ctx.fillStyle = 'rgba(' + str(math.floor(rgb[0] * 255)) + ',' + str(math.floor(rgb[1] * 255)) + ',' + str(math.floor(rgb[2] * 255)) + ',255)'
@@ -67,8 +67,8 @@ class Renderer(object):
 
     def drawImageNow(self, img, sx, sy, sw, sh, dx, dy, dw, dh):
         self.ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh)
-        
-    # will not be drawn until flush is called 
+
+    # will not be drawn until flush is called
 
     def fillCircle(self, x, y, r, rgb1, rgb2):
         self.toDraw.append([y - r, self.fillCircleNow, [x, y, r, rgb1, rgb2]])

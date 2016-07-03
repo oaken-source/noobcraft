@@ -9,7 +9,7 @@ from browser import html
 from noobcraft.rendering.rectangle import Rectangle
 from noobcraft.rendering.character import Character
 
-class RPGTheme():    
+class RPGTheme():
     '''
     This class represents a world in noobcraft.
     '''

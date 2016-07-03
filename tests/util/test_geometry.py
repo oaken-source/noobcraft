@@ -71,7 +71,9 @@ def test_vec2_mul_scalar(almost):
         m = random.uniform(0, 1)
         p = random.uniform(0, 1)
         v = Vec2(direction=random.uniform(0, 2 * math.pi), magnitude=m)
-        assert isinstance(v, Vec2) and almost(abs(v * p), m * p)
+        w = v * p
+        assert isinstance(w, Vec2)
+        assert almost(abs(w), m * p) and almost(v * w, abs(v) * abs(w))
 
 def test_vec2_mul_dot():
     '''
@@ -87,5 +89,17 @@ def test_vec2_div_scalar(almost):
         m = random.uniform(0, 1)
         p = random.uniform(0, 1)
         v = Vec2(direction=random.uniform(0, 2 * math.pi), magnitude=m)
-        assert isinstance(v, Vec2) and almost(abs(v / p), m / p)
+        w = v / p
+        assert isinstance(w, Vec2)
+        assert almost(abs(w), m / p) and almost(v * w, abs(v) * abs(w))
 
+def test_vec2_normalized(almost):
+    '''
+    normalize should produce a new vector with the same direction and a magnitude of 1.
+    '''
+    for i in range(100):
+        m = random.uniform(0, 1)
+        v = Vec2(direction=random.uniform(0, 2 * math.pi), magnitude=m)
+        w = v.normalized()
+        assert isinstance(w, Vec2)
+        assert almost(abs(w), 1) and almost(v * w, abs(v) * abs(w))
