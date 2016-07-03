@@ -29,7 +29,7 @@ class BasicTheme():
     def draw(self, renderer, game, elapsedSeconds):
         renderer.setFont('Arial', 14)
 
-        r = Rectangle(0, 0, renderer.width-10, renderer.height-10)
+        r = Rectangle(0, 0, renderer.width, renderer.height)
         self.drawTerrain(renderer, r, game, elapsedSeconds)
         self.drawUnits(renderer, r, game, elapsedSeconds)
         renderer.flush()

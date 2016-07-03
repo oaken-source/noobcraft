@@ -9,19 +9,19 @@
     <body onload="brython(1)">
 
         <div>
-            <button id="zoomInButton">zoom in</button>
-            <button id="zoomOutButton">zoom out</button>
-            <button id="moveLeftButton">left</button>
-            <button id="moveRightButton">right</button>
-            <button id="moveUpButton">up</button>
-            <button id="moveDownButton">down</button>
-            <button id="themeChangeButton">change theme</button>
+            <button id="zoomInButton">zoom in (+)</button>
+            <button id="zoomOutButton">zoom out (-)</button>
+            <button id="moveLeftButton">left (a)</button>
+            <button id="moveRightButton">right (d)</button>
+            <button id="moveUpButton">up (w)</button>
+            <button id="moveDownButton">down (s)</button>
+            <button id="themeChangeButton">change theme (t)</button>
         </div>
         
         <canvas id="mycanvas" style="border:1px solid #000000;">Loading... Please wait. :)</canvas>
 
         <script type="text/python">
-            from browser import document, timer, alert
+            from browser import document, timer, alert, console
 
             from noobcraft.game import Game
             from noobcraft.rendering.renderer import Renderer
@@ -40,8 +40,8 @@
                     alert('You need Safari or Firefox 1.5+ to see this demo.')
                 else:
                     ctx = canvas.getContext('2d')
-                    ctx.canvas.width  = 900
-                    ctx.canvas.height = 800
+                    ctx.canvas.width  = 896
+                    ctx.canvas.height = 768
                     document.renderer.setCtx(ctx)
                     document.themes[document.themeIndex].draw(document.renderer, document.game, elapsedSeconds)
 
@@ -78,6 +78,23 @@
             def nextTheme(event):
                 document.themeIndex = (document.themeIndex + 1) % len(document.themes)
 
+            def charCode(event):
+                console.log(event)
+                if event.key is '+':
+                    zoomIn(event)
+                if event.key is '-':
+                    zoomOut(event)
+                if event.key is 'a' or event.keyCode is 37:
+                    moveLeft(event)
+                if event.key is 'd' or event.keyCode is 39:
+                    moveRight(event)
+                if event.key is 'w' or event.keyCode is 38:
+                    moveUp(event)
+                if event.key is 's' or event.keyCode is 40:
+                    moveDown(event)
+                if event.key is 't':
+                    nextTheme(event)
+
             document.game.addActor(LazyActor())
             document.game.addActor(RandomActor())
             document.game.addActor(BerserkActor())
@@ -93,6 +110,8 @@
             document['moveUpButton'].bind('click',moveUp)
             document['moveDownButton'].bind('click',moveDown)
             document['themeChangeButton'].bind('click',nextTheme)
+
+            document.bind('keydown',charCode)
         </script>
     </body>
 </html>
